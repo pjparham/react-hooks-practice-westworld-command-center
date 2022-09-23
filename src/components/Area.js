@@ -3,7 +3,7 @@ import "../stylesheets/Area.css";
 
 
 function Area({ area }) {
-  const { id, name, limit, auth_req} = area
+
 
   function humanize(str) {
     var i, frags = str.split('_');
@@ -16,10 +16,10 @@ function Area({ area }) {
   return (
     <div
       className="area"
-      id={name}
+      id={area.name}
     >
       <h3 className="labels">
-        {humanize(name)}
+        {humanize(area.name)}
       </h3>
 
     </div>

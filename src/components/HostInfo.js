@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Radio,
   Icon,
@@ -10,34 +10,68 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo() {
+function HostInfo({ host, areas, handleUpdateHost }) {
   // This state is just to show how the dropdown component works.
   // Options have to be formatted in this way (array of objects with keys of: key, text, value)
   // Value has to match the value in the object to render the right text.
 
   // IMPORTANT: But whether it should be stateful or not is entirely up to you. Change this component however you like.
-  const [options] = useState([
-    { key: "some_area", text: "Some Area", value: "some_area" },
-    { key: "another_area", text: "Another Area", value: "another_area" },
-  ]);
+  const [options, setOptions] = useState([]);
+  const { firstName, active, imageUrl, gender, area } = host
+  const [isActive, setIsActive] = useState(active)
 
-  const [value] = useState("some_area");
+  const [value, setValue] = useState(host.area);
+  //this useEffect sets our displayed dropdown value to match a hosts current area
+  useEffect(() => {
+    setValue(area)
+  }, [host])
+
 
   function handleOptionChange(e, { value }) {
-    // the 'value' attribute is given via Semantic's Dropdown component.
-    // Put a debugger or console.log in here and see what the "value" variable is when you pass in different options.
-    // See the Semantic docs for more info: https://react.semantic-ui.com/modules/dropdown/#usage-controlled
+    setValue(value)
+    fetch(`http://localhost:3001/hosts/${host.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "area": value
+      })
+    })
+    .then((r) => r.json())
+    .then((updatedHost) => handleUpdateHost(updatedHost))
+
+
+  }
+  function humanize(str) {
+    var i, frags = str.split('_');
+    for (i=0; i<frags.length; i++) {
+      frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
+    }
+    return frags.join(' ');
   }
 
+    const areaObjects = areas.map((area) => {
+      return {key: area.name, text: humanize(area.name), value: area.name  }
+    })
+    // setOptions(areaObjects)
+    useEffect(() => {
+      setOptions(areaObjects)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [host])
+
+
   function handleRadioChange() {
-    console.log("The radio button fired");
+      setIsActive(!isActive);
   }
+
+
 
   return (
     <Grid>
       <Grid.Column width={6}>
         <Image
-          src={/* pass in the right image here */ ""}
+          src={imageUrl}
           floated="left"
           size="small"
           className="hostImg"
@@ -47,21 +81,18 @@ function HostInfo() {
         <Card>
           <Card.Content>
             <Card.Header>
-              {"Bob"} | {true ? <Icon name="man" /> : <Icon name="woman" />}
-              {/* Think about how the above should work to conditionally render the right First Name and the right gender Icon */}
+              {firstName} | {gender === "Male" ? <Icon name="man" /> : <Icon name="woman" />}
             </Card.Header>
             <Card.Meta>
-              {/* Sometimes the label should take "Decommissioned". How are we going to conditionally render that? */}
-              {/* Checked takes a boolean and determines what position the switch is in. Should it always be true? */}
               <Radio
                 onChange={handleRadioChange}
-                label={"Active"}
-                checked={true}
+                label={isActive ? "Active" : "Decommissioned"}
+                checked={isActive}
                 slider
               />
             </Card.Meta>
             <Divider />
-            Current Area:
+            Current Area: {humanize(value)}
             <Dropdown
               onChange={handleOptionChange}
               value={value}
@@ -76,3 +107,19 @@ function HostInfo() {
 }
 
 export default HostInfo;
+
+//may need to make a patch request when area is changed
+// function handleAnswerChange(e){
+//   console.log(e.target.value)
+//   fetch(`http://localhost:3001/hosts/${host.id}`, {
+//     method: "PATCH",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       "correctIndex": e.target.value
+//     })
+//   })
+//   .then((r) => r.json())
+//   .then((updatedQuestion) => onUpdateQuestion(updatedQuestion))
+// }

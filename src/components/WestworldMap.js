@@ -7,6 +7,7 @@ function WestworldMap({ areas, setAreas }) {
     fetch(`http://localhost:3001/areas`)
     .then((r) => r.json())
     .then((areaData) => setAreas(areaData))
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 

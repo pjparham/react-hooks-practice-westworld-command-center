@@ -14,10 +14,19 @@ function App() {
     .then((hostData) => setHosts(hostData))
   }, [])
 
+  function handleUpdateHost(updatedHost){
+    const updatedHosts = hosts.map((host) => {
+      if (host.id === updatedHost.id) {
+        return updatedHost
+      } else {return host}
+    });
+    setHosts(updatedHosts)
+  }
+
   return (
     <Segment id="app">
       <WestworldMap setAreas={setAreas} areas={areas}/>
-      <Headquarters hosts={hosts}/>
+      <Headquarters handleUpdateHost={handleUpdateHost} areas={areas} hosts={hosts}/>
     </Segment>
   );
 }
