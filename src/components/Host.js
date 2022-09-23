@@ -3,7 +3,7 @@ import { Card } from "semantic-ui-react";
 import "../stylesheets/Host.css";
 
 function Host({ host, setActiveHost, activeHost }) {
-  console.log('from host', activeHost)
+
   function handleClick(){
     setActiveHost(host)
   }

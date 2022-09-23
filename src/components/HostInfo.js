@@ -104,7 +104,7 @@ function HostInfo({ host, areas, handleUpdateHost }) {
               />
             </Card.Meta>
             <Divider />
-            Current Area: {humanize(value)}
+            Current Area: {isActive ? humanize(value) : "Cold Storage"}
             <Dropdown
               onChange={handleOptionChange}
               value={value}

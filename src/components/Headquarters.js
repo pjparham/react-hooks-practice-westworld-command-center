@@ -5,8 +5,9 @@ import ColdStorage from "./ColdStorage"
 import LogPanel from "./LogPanel";
 import "../stylesheets/Headquarters.css";
 
-function Headquarters({ hosts, areas, handleUpdateHost }) {
-  const [activeHost, setActiveHost] = useState({})
+function Headquarters({ hosts, areas, handleUpdateHost, activeHost, setActiveHost }) {
+
+
 
   return (
     <Grid celled="internally">

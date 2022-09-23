@@ -7,6 +7,7 @@ import Headquarters from "./Headquarters";
 function App() {
   const [areas, setAreas] = useState([])
   const [hosts, setHosts] = useState([])
+  const [activeHost, setActiveHost] = useState({})
 
   useEffect(() => {
     fetch('http://localhost:3001/hosts')
@@ -23,10 +24,13 @@ function App() {
     setHosts(updatedHosts)
   }
 
+  const coldStorageHosts = hosts.filter((host) => host.active === false)
+  const activeHosts = hosts.filter((host) => host.active === true)
+
   return (
     <Segment id="app">
-      <WestworldMap setAreas={setAreas} areas={areas}/>
-      <Headquarters handleUpdateHost={handleUpdateHost} areas={areas} hosts={hosts}/>
+      <WestworldMap activeHost={activeHost} setActiveHost={setActiveHost} setAreas={setAreas} areas={areas} hosts={activeHosts}/>
+      <Headquarters activeHost={activeHost} setActiveHost={setActiveHost} handleUpdateHost={handleUpdateHost} areas={areas} hosts={coldStorageHosts}/>
     </Segment>
   );
 }

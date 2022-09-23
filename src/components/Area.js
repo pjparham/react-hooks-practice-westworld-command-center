@@ -1,9 +1,10 @@
 import React from "react";
+import HostList from "./HostList";
 import "../stylesheets/Area.css";
 
 
-function Area({ area }) {
-
+function Area({ area, hosts, setActiveHost, activeHost }) {
+  const { id, name, limit, auth_req} = area
 
   function humanize(str) {
     var i, frags = str.split('_');
@@ -21,16 +22,16 @@ function Area({ area }) {
       <h3 className="labels">
         {humanize(area.name)}
       </h3>
-
+      <HostList activeHost={activeHost} setActiveHost={setActiveHost} hosts={hosts} />
     </div>
   );
 }
 
 // Area.propTypes = {
 //   hosts: function (props) {
-//     if (props.hosts.length > limit) {
+//     if (hosts.length > limit) {
 //       throw Error(
-//         `HEY!! You got too many hosts in ${props.name}. The limit for that area is ${limit}. You gotta fix that!`
+//         `HEY!! You got too many hosts in ${humanize(area.name)}. The limit for that area is ${limit}. You gotta fix that!`
 //       );
 //     }
 //   },
