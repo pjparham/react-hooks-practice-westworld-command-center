@@ -11,7 +11,7 @@ function Headquarters({ hosts, areas, handleUpdateHost }) {
   return (
     <Grid celled="internally">
       <Grid.Column width={8}>
-        <ColdStorage setActiveHost={setActiveHost} hosts={hosts}/>
+        <ColdStorage activeHost={activeHost} setActiveHost={setActiveHost} hosts={hosts}/>
       </Grid.Column>
       <Grid.Column width={5}>
         <Details handleUpdateHost={handleUpdateHost} areas={areas} host={activeHost}/>
