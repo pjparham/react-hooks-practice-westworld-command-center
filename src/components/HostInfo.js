@@ -24,6 +24,7 @@ function HostInfo({ host, areas, handleUpdateHost }) {
   //this useEffect sets our displayed dropdown value to match a hosts current area
   useEffect(() => {
     setValue(area)
+    setIsActive(active)
   }, [host])
 
 
@@ -63,6 +64,17 @@ function HostInfo({ host, areas, handleUpdateHost }) {
 
   function handleRadioChange() {
       setIsActive(!isActive);
+      fetch(`http://localhost:3001/hosts/${host.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "active": !isActive
+        })
+      })
+      .then((r) => r.json())
+      .then((updatedHost) => handleUpdateHost(updatedHost))
   }
 
 
@@ -108,18 +120,3 @@ function HostInfo({ host, areas, handleUpdateHost }) {
 
 export default HostInfo;
 
-//may need to make a patch request when area is changed
-// function handleAnswerChange(e){
-//   console.log(e.target.value)
-//   fetch(`http://localhost:3001/hosts/${host.id}`, {
-//     method: "PATCH",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       "correctIndex": e.target.value
-//     })
-//   })
-//   .then((r) => r.json())
-//   .then((updatedQuestion) => onUpdateQuestion(updatedQuestion))
-// }
