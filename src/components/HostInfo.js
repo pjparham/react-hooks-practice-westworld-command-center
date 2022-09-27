@@ -10,7 +10,7 @@ import {
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
 
-function HostInfo({ host, areas, handleUpdateHost }) {
+function HostInfo({ host, areas, handleUpdateHost, hosts }) {
   // This state is just to show how the dropdown component works.
   // Options have to be formatted in this way (array of objects with keys of: key, text, value)
   // Value has to match the value in the object to render the right text.
@@ -26,24 +26,72 @@ function HostInfo({ host, areas, handleUpdateHost }) {
     setValue(area)
     setIsActive(active)
   }, [host])
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+  // console.log(value)
+  // let filterArea = areas.filter((area) => area.name === value)
+  // console.log('filter', filterArea[0].name, value)
+  // console.log('filter', areas.filter.(area) => a)
 
-
+  //   if (filterArea[0].name === value && filterArea[0].limit )
+    // let filterArea = areas.filter((area) => area.name === value)
+    // let areaHosts = hosts.filter((host) => host.area === value)
+    // let selectedArea = areas.filter((area) => area.name === value)
+    // console.log('HostInfo', areaHosts.length, selectedArea[0].limit)
   function handleOptionChange(e, { value }) {
-    setValue(value)
-    fetch(`http://localhost:3001/hosts/${host.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        "area": value
+    let areaHosts = hosts.filter((host) => host.area === value)
+    let selectedArea = areas.filter((area) => area.name === value)
+    console.log(hosts, areaHosts)
+    // console.log(value)
+    if (areaHosts.length < selectedArea[0].limit){
+      // console.log(Boolean(areaHosts.length < selectedArea[0].limit), areaHosts, areaHosts.length, selectedArea, selectedArea[0].limit)
+      setValue(value)
+      console.log('hi there')
+      fetch(`http://localhost:3001/hosts/${host.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "area": value
+        })
       })
-    })
-    .then((r) => r.json())
-    .then((updatedHost) => handleUpdateHost(updatedHost))
-
-
+      .then((r) => r.json())
+      .then((updatedHost) => handleUpdateHost(updatedHost))
+    }
+    else{
+      alert(`HEY!! You got too many hosts in ${humanize(selectedArea[0].name)}. The limit for that area is ${selectedArea[0].limit}. You gotta fix that!`)
+      // throw Error(
+      //   `HEY!! You got too many hosts in ${humanize(selectedArea[0].name)}. The limit for that area is ${selectedArea[0].limit}. You gotta fix that!`
+      // )
+    }
   }
+// Area.propTypes = {
+//   hosts: function (props) {
+//     if (hosts.length > limit) {
+//       throw Error(
+//         `HEY!! You got too many hosts in ${humanize(area.name)}. The limit for that area is ${limit}. You gotta fix that!`
+//       );
+//     }
+//   },
+// };
+
+  // function handleOptionChange(e, { value }) {
+  //   console.log(value)
+  //   setValue(value)
+  //   fetch(`http://localhost:3001/hosts/${host.id}`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       "area": value
+  //     })
+  //   })
+  //   .then((r) => r.json())
+  //   .then((updatedHost) => handleUpdateHost(updatedHost, value))
+  // }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+
   function humanize(str) {
     var i, frags = str.split('_');
     for (i=0; i<frags.length; i++) {
@@ -53,7 +101,8 @@ function HostInfo({ host, areas, handleUpdateHost }) {
   }
 
     const areaObjects = areas.map((area) => {
-      return {key: area.name, text: humanize(area.name), value: area.name  }
+
+      return {key: area.name, text: humanize(area.name), value: area.name, limit: area.limit  }
     })
     // setOptions(areaObjects)
     useEffect(() => {

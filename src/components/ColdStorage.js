@@ -6,7 +6,7 @@ function ColdStorage({ hosts, setActiveHost, activeHost }) {
   return (
     <Segment.Group className="HQComps">
       <Segment compact>
-        <h3 className="labels">ColdStorage</h3>
+        <h3 className="labels">Cold Storage</h3>
       </Segment>
   <Segment compact>
         <HostList activeHost={activeHost} hosts={hosts} setActiveHost={setActiveHost} />

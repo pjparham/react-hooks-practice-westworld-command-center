@@ -9,8 +9,7 @@ function WestworldMap({ areas, setAreas, hosts, activeHost, setActiveHost }) {
     .then((areaData) => setAreas(areaData))
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-
+  
   const displayAreas = areas.map((area) => {
     const areaHosts = hosts.filter((host) => host.area === area.name)
     return <Area activeHost={activeHost} setActiveHost={setActiveHost} hosts={areaHosts} key={area.id} area={area}/>

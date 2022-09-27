@@ -13,7 +13,11 @@ function Area({ area, hosts, setActiveHost, activeHost }) {
     }
     return frags.join(' ');
   }
-
+  // if (hosts.length > limit) {
+  //   alert(
+  //     `HEY!! You got too many hosts in ${humanize(name)}. The limit for that area is ${limit}. You gotta fix that!`
+  //   )
+  // }
   return (
     <div
       className="area"
