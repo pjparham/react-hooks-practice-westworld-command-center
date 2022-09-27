@@ -26,24 +26,12 @@ function HostInfo({ host, areas, handleUpdateHost, hosts }) {
     setValue(area)
     setIsActive(active)
   }, [host])
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
-  // console.log(value)
-  // let filterArea = areas.filter((area) => area.name === value)
-  // console.log('filter', filterArea[0].name, value)
-  // console.log('filter', areas.filter.(area) => a)
 
-  //   if (filterArea[0].name === value && filterArea[0].limit )
-    // let filterArea = areas.filter((area) => area.name === value)
-    // let areaHosts = hosts.filter((host) => host.area === value)
-    // let selectedArea = areas.filter((area) => area.name === value)
-    // console.log('HostInfo', areaHosts.length, selectedArea[0].limit)
+  
   function handleOptionChange(e, { value }) {
     let areaHosts = hosts.filter((host) => host.area === value)
     let selectedArea = areas.filter((area) => area.name === value)
-    console.log(hosts, areaHosts)
-    // console.log(value)
     if (areaHosts.length < selectedArea[0].limit){
-      // console.log(Boolean(areaHosts.length < selectedArea[0].limit), areaHosts, areaHosts.length, selectedArea, selectedArea[0].limit)
       setValue(value)
       console.log('hi there')
       fetch(`http://localhost:3001/hosts/${host.id}`, {
@@ -65,32 +53,7 @@ function HostInfo({ host, areas, handleUpdateHost, hosts }) {
       // )
     }
   }
-// Area.propTypes = {
-//   hosts: function (props) {
-//     if (hosts.length > limit) {
-//       throw Error(
-//         `HEY!! You got too many hosts in ${humanize(area.name)}. The limit for that area is ${limit}. You gotta fix that!`
-//       );
-//     }
-//   },
-// };
 
-  // function handleOptionChange(e, { value }) {
-  //   console.log(value)
-  //   setValue(value)
-  //   fetch(`http://localhost:3001/hosts/${host.id}`, {
-  //     method: "PATCH",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       "area": value
-  //     })
-  //   })
-  //   .then((r) => r.json())
-  //   .then((updatedHost) => handleUpdateHost(updatedHost, value))
-  // }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////
 
   function humanize(str) {
     var i, frags = str.split('_');
@@ -104,7 +67,6 @@ function HostInfo({ host, areas, handleUpdateHost, hosts }) {
 
       return {key: area.name, text: humanize(area.name), value: area.name, limit: area.limit  }
     })
-    // setOptions(areaObjects)
     useEffect(() => {
       setOptions(areaObjects)
         // eslint-disable-next-line react-hooks/exhaustive-deps
