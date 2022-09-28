@@ -15,28 +15,7 @@ function App() {
     .then((hostData) => setHosts(hostData))
   }, [])
 
-  // function handleUpdateHost(updatedHost, value){
-  //   console.log('value', value)
-  //   let areaHosts = hosts.filter((host) => host.area === value)
-  //   let selectedArea = areas.filter((area) => area.name === value)
-  //   console.log('from handleUpdateHost', areaHosts, selectedArea)
-  //   if (areaHosts >= selectedArea[0].limit){
-
-  //   }
-  //   else{
-  //     const updatedHosts = hosts.map((host) => {
-  //       if (host.id === updatedHost.id) {
-  //         return updatedHost
-  //       } else {return host}
-  //     });
-  //     setHosts(updatedHosts)
-  //   }
-  //   // let filterArea = areas.filter((area) => area.name === value)
-  //   // if (filterArea[0].limit )
-  // }
-
-
-  function handleUpdateHost(updatedHost, value){
+  function handleUpdateHost(updatedHost){
     const updatedHosts = hosts.map((host) => {
       if (host.id === updatedHost.id) {
         return updatedHost
@@ -44,6 +23,8 @@ function App() {
     });
     setHosts(updatedHosts)
   }
+
+  // console.log(hosts)
 
 
   const coldStorageHosts = hosts.filter((host) => host.active === false)

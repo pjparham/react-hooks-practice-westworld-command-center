@@ -8,7 +8,7 @@ function ColdStorage({ hosts, setActiveHost, activeHost }) {
       <Segment compact>
         <h3 className="labels">Cold Storage</h3>
       </Segment>
-  <Segment compact>
+      <Segment compact>
         <HostList activeHost={activeHost} hosts={hosts} setActiveHost={setActiveHost} />
       </Segment>
     </Segment.Group>

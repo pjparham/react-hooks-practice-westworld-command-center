@@ -4,7 +4,6 @@ import "../stylesheets/Area.css";
 
 
 function Area({ area, hosts, setActiveHost, activeHost }) {
-  const { id, name, limit, auth_req} = area
 
   function humanize(str) {
     var i, frags = str.split('_');
@@ -13,11 +12,7 @@ function Area({ area, hosts, setActiveHost, activeHost }) {
     }
     return frags.join(' ');
   }
-  // if (hosts.length > limit) {
-  //   alert(
-  //     `HEY!! You got too many hosts in ${humanize(name)}. The limit for that area is ${limit}. You gotta fix that!`
-  //   )
-  // }
+
   return (
     <div
       className="area"
@@ -30,15 +25,5 @@ function Area({ area, hosts, setActiveHost, activeHost }) {
     </div>
   );
 }
-
-// Area.propTypes = {
-//   hosts: function (props) {
-//     if (hosts.length > limit) {
-//       throw Error(
-//         `HEY!! You got too many hosts in ${humanize(area.name)}. The limit for that area is ${limit}. You gotta fix that!`
-//       );
-//     }
-//   },
-// };
 
 export default Area;

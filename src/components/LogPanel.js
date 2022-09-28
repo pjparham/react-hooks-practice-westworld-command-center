@@ -32,13 +32,24 @@ function LogPanel({ hosts }) {
           </p>
         ))}
       </pre>
-
-      {/* Button below is the Activate All/Decommisssion All button */}
-      {/* This isn't always going to be the same color...*/}
-      {/* Should the button always read "ACTIVATE ALL"? When should it read "DECOMMISSION ALL"? */}
       <Button onClick={onActivate}fluid color={activate ? "green" : "red"} content={activate ? "DECOMMISSION ALL" : "ACTIVATE ALL"} />
     </Segment>
   );
 }
 
 export default LogPanel;
+
+// function handleRadioChange() {
+//   setIsActive(!isActive);
+//   fetch(`http://localhost:3001/hosts/${host.id}`, {
+//     method: "PATCH",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       "active": !isActive
+//     })
+//   })
+//   .then((r) => r.json())
+//   .then((updatedHost) => handleUpdateHost(updatedHost))
+// }

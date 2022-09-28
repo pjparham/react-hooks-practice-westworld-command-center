@@ -27,13 +27,12 @@ function HostInfo({ host, areas, handleUpdateHost, hosts }) {
     setIsActive(active)
   }, [host])
 
-  
+
   function handleOptionChange(e, { value }) {
     let areaHosts = hosts.filter((host) => host.area === value)
     let selectedArea = areas.filter((area) => area.name === value)
     if (areaHosts.length < selectedArea[0].limit){
       setValue(value)
-      console.log('hi there')
       fetch(`http://localhost:3001/hosts/${host.id}`, {
         method: "PATCH",
         headers: {
@@ -48,9 +47,6 @@ function HostInfo({ host, areas, handleUpdateHost, hosts }) {
     }
     else{
       alert(`HEY!! You got too many hosts in ${humanize(selectedArea[0].name)}. The limit for that area is ${selectedArea[0].limit}. You gotta fix that!`)
-      // throw Error(
-      //   `HEY!! You got too many hosts in ${humanize(selectedArea[0].name)}. The limit for that area is ${selectedArea[0].limit}. You gotta fix that!`
-      // )
     }
   }
 

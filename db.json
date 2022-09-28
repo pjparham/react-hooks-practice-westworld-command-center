@@ -44,10 +44,10 @@
       "id": 5,
       "firstName": "Peter",
       "lastName": "Abernathy",
-      "active": false,
+      "active": true,
       "imageUrl": "https://vignette.wikia.nocookie.net/westworld/images/a/a2/Peter_Abernathy_%281%29.jpg/revision/latest?cb=20161024014816",
       "gender": "Male",
-      "area": "badlands",
+      "area": "python_pass",
       "authorized": false
     },
     {
@@ -77,7 +77,7 @@
       "active": true,
       "imageUrl": "https://vignette.wikia.nocookie.net/westworld/images/c/cb/Lawrence_Reunion.jpg/revision/latest/scale-to-width-down/310?cb=20180613182747",
       "gender": "Male",
-      "area": "pariah",
+      "area": "high_plains",
       "authorized": false
     },
     {
