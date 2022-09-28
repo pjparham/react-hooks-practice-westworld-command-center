@@ -24,9 +24,6 @@ function App() {
     setHosts(updatedHosts)
   }
 
-  // console.log(hosts)
-
-
   const coldStorageHosts = hosts.filter((host) => host.active === false)
   const activeHosts = hosts.filter((host) => host.active === true)
 

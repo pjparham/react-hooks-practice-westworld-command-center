@@ -9,13 +9,9 @@ import {
   Divider,
 } from "semantic-ui-react";
 import "../stylesheets/HostInfo.css";
+import { Log } from "../services/Log";
 
-function HostInfo({ host, areas, handleUpdateHost, hosts }) {
-  // This state is just to show how the dropdown component works.
-  // Options have to be formatted in this way (array of objects with keys of: key, text, value)
-  // Value has to match the value in the object to render the right text.
-
-  // IMPORTANT: But whether it should be stateful or not is entirely up to you. Change this component however you like.
+function HostInfo({ host, areas, handleUpdateHost, hosts, updateLogs }) {
   const [options, setOptions] = useState([]);
   const { firstName, active, imageUrl, gender, area } = host
   const [isActive, setIsActive] = useState(active)
@@ -27,6 +23,13 @@ function HostInfo({ host, areas, handleUpdateHost, hosts }) {
     setIsActive(active)
   }, [host])
 
+  function humanize(str) {
+    var i, frags = str.split('_');
+    for (i=0; i<frags.length; i++) {
+      frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
+    }
+    return frags.join(' ');
+  }
 
   function handleOptionChange(e, { value }) {
     let areaHosts = hosts.filter((host) => host.area === value)
@@ -44,20 +47,17 @@ function HostInfo({ host, areas, handleUpdateHost, hosts }) {
       })
       .then((r) => r.json())
       .then((updatedHost) => handleUpdateHost(updatedHost))
+      let message = (Log.notify(`${firstName} set in area ${humanize(selectedArea[0].name)}.`)) 
+      updateLogs(message)
     }
     else{
-      alert(`HEY!! You got too many hosts in ${humanize(selectedArea[0].name)}. The limit for that area is ${selectedArea[0].limit}. You gotta fix that!`)
+      let message = (Log.error(`Error: Too many hosts. Cannot add ${firstName} to ${humanize(selectedArea[0].name)}`))
+      updateLogs(message)
     }
   }
 
 
-  function humanize(str) {
-    var i, frags = str.split('_');
-    for (i=0; i<frags.length; i++) {
-      frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
-    }
-    return frags.join(' ');
-  }
+ 
 
     const areaObjects = areas.map((area) => {
 
@@ -82,6 +82,8 @@ function HostInfo({ host, areas, handleUpdateHost, hosts }) {
       })
       .then((r) => r.json())
       .then((updatedHost) => handleUpdateHost(updatedHost))
+      let message = isActive ? (Log.notify(`Decommissioned ${firstName}.`)) : (Log.warn(`Activated ${firstName}.`))
+      updateLogs(message)
   }
 
 

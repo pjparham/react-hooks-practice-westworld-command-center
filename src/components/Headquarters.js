@@ -4,10 +4,14 @@ import Details from "./Details";
 import ColdStorage from "./ColdStorage"
 import LogPanel from "./LogPanel";
 import "../stylesheets/Headquarters.css";
+import { Log } from "../services/Log";
 
 function Headquarters({ hosts, areas, handleUpdateHost, activeHost, setActiveHost, allHosts }) {
-  const [logs, setLogs] = useState([])
+  const [logs, setLogs] = useState([(Log.notify("Welcome to Westworld Command Center."))])
 
+  function updateLogs(newLog){
+    setLogs([newLog, ...logs])
+  }
 //we pass down all hosts with allHosts prop because hosts is passing down cold storage hosts
 
   return (
@@ -16,10 +20,10 @@ function Headquarters({ hosts, areas, handleUpdateHost, activeHost, setActiveHos
         <ColdStorage activeHost={activeHost} setActiveHost={setActiveHost} hosts={hosts}/>
       </Grid.Column>
       <Grid.Column width={5}>
-        <Details handleUpdateHost={handleUpdateHost} areas={areas} hosts={allHosts} host={activeHost}/>
+        <Details updateLogs={updateLogs} handleUpdateHost={handleUpdateHost} areas={areas} hosts={allHosts} host={activeHost}/>
       </Grid.Column>
       <Grid.Column width={3}>
-        <LogPanel handleUpdateHost={handleUpdateHost} hosts={allHosts} logs={logs} setLogs={setLogs}/>
+        <LogPanel updateLogs={updateLogs} handleUpdateHost={handleUpdateHost} hosts={allHosts} logs={logs} setLogs={setLogs}/>
       </Grid.Column>
     </Grid>
   );
