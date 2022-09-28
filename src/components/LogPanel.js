@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Segment, Button } from "semantic-ui-react";
 import { Log } from "../services/Log";
 
-function LogPanel({ hosts }) {
+function LogPanel({ hosts, handleUpdateHost }) {
   const [activate, setActivate] = useState(false)
   function dummyLogs() {
     // This is just to show you how this should work. But where should the log data actually get stored?
@@ -19,9 +19,20 @@ function LogPanel({ hosts }) {
     return logs;
   }
 
+
+  function activateHost(host){
+    host.active = !activate
+    handleUpdateHost(host)
+   }
+  
+
   function onActivate(){
     setActivate(!activate)
-  }
+    console.log('activate', activate)
+    hosts.forEach((host) => {
+     activateHost(host)
+    })}
+
 
   return (
     <Segment className="HQComps" id="logPanel">
@@ -39,17 +50,3 @@ function LogPanel({ hosts }) {
 
 export default LogPanel;
 
-// function handleRadioChange() {
-//   setIsActive(!isActive);
-//   fetch(`http://localhost:3001/hosts/${host.id}`, {
-//     method: "PATCH",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       "active": !isActive
-//     })
-//   })
-//   .then((r) => r.json())
-//   .then((updatedHost) => handleUpdateHost(updatedHost))
-// }

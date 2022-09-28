@@ -18,7 +18,7 @@ function Headquarters({ hosts, areas, handleUpdateHost, activeHost, setActiveHos
         <Details handleUpdateHost={handleUpdateHost} areas={areas} hosts={allHosts} host={activeHost}/>
       </Grid.Column>
       <Grid.Column width={3}>
-        <LogPanel hosts={allHosts}/>
+        <LogPanel handleUpdateHost={handleUpdateHost} hosts={allHosts}/>
       </Grid.Column>
     </Grid>
   );
