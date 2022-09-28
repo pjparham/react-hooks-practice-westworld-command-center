@@ -2,21 +2,29 @@ import React, { useState } from "react";
 import { Segment, Button } from "semantic-ui-react";
 import { Log } from "../services/Log";
 
-function LogPanel({ hosts, handleUpdateHost }) {
+function LogPanel({ hosts, handleUpdateHost, logs, setLogs }) {
   const [activate, setActivate] = useState(false)
-  function dummyLogs() {
-    // This is just to show you how this should work. But where should the log data actually get stored?
-    // And where should we be creating logs in the first place?
-    // Use the Log Service class (located in: 'src/services/Log') we've created anywhere you like.
-    // Just remember to import it
 
-    let logs = [];
+  // function displayLogs() {
+  //   // This is just to show you how this should work. But where should the log data actually get stored?
+  //   // And where should we be creating logs in the first place?
+  //   // Use the Log Service class (located in: 'src/services/Log') we've created anywhere you like.
+  //   // Just remember to import it
 
-    logs.unshift(Log.warn("This is an example of a warn log"));
-    logs.unshift(Log.notify("This is an example of a notify log"));
-    logs.unshift(Log.error("This is an example of an error log"));
 
-    return logs;
+  //   setLogs([(Log.warn("This is an example of a warn log")), ...logs]);
+  //   setLogs([(Log.notify("This is an example of a notify log")), ...logs]);
+  //   setLogs([(Log.error("This is an example of an error log")), ...logs]);
+
+
+  // }
+
+  // // setLogs([(Log.warn("This is an example of a warn log")), ...logs]);
+  // // setLogs([(Log.notify("This is an example of a notify log")), ...logs]);
+  // // setLogs([(Log.error("This is an example of an error log")), ...logs]);
+
+  function updateLogs(newLog){
+    setLogs([newLog, ...logs])
   }
 
 
@@ -28,16 +36,18 @@ function LogPanel({ hosts, handleUpdateHost }) {
 
   function onActivate(){
     setActivate(!activate)
-    console.log('activate', activate)
+    let message = activate ? (Log.notify("decommissioning all hosts.")) : (Log.warn("Activating all hosts!"))
+    updateLogs(message)
     hosts.forEach((host) => {
      activateHost(host)
-    })}
+    })
+  }
 
 
   return (
     <Segment className="HQComps" id="logPanel">
       <pre>
-        {dummyLogs().map((log, i) => (
+        {logs.map((log, i) => (
           <p key={i} className={log.type}>
             {log.msg}
           </p>
